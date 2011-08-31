@@ -1,11 +1,14 @@
 {
-  "name": "dateformat",
-  "description": "A node.js package for Steven Levithan's excellent dateFormat() function.",
-  "maintainers": "Felix Geisendörfer <felix@debuggable.com>",
-  "homepage": "https://github.com/felixge/node-dateformat",
-  "author": "Steven Levithan",
-  "version": "1.0.1-1.2.3",
-  "main": "./lib/dateformat",
+  "name": "localize",
+  "description": "A GNU gettext-inspired (but not conformant) localization library for Node.js",
+  "homepage": "https://github.com/AGROSICA/node-localize",
+  "author": "David Ellis",
+  "contributors": [
+    { name: "Steven Levithan" },
+    { name: "Felix Geisendörfer" }
+  ],
+  "version": "0.0.1",
+  "main": "./lib/localize",
   "dependencies": {},
   "devDependencies": {},
   "engines": {
