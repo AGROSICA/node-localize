@@ -11,11 +11,11 @@ var Localize = require('localize');
 var myLocalize = new Localize({
     "Testing...": {
         "es": "Pruebas...",
-	"sr": "тестирање..."
+        "sr": "тестирање..."
     },
     "Substitution: $[1]": {
         "es": "Sustitución: $[1]",
-	"sr": "замена: $[1]"
+        "sr": "замена: $[1]"
     }
 });
 
