@@ -174,7 +174,7 @@ Your controllers shouldn't really even be aware of any localization issues; the 
 {{if session.lang != "en"}}
 <strong>${translate("Warning: The following content is in English.")}</strong>
 {{/if}}
-```html
+```
 
 I'm using [jQuery Templates for Express](https://github.com/kof/node-jqtpl) here, but it should be easy to translate to whatever templating language you prefer.
 
