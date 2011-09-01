@@ -4,8 +4,8 @@
   "homepage": "https://github.com/AGROSICA/node-localize",
   "author": "David Ellis",
   "contributors": [
-    { name: "Steven Levithan" },
-    { name: "Felix Geisendörfer" }
+    "Steven Levithan",
+    "Felix Geisendörfer"
   ],
   "version": "0.1.0",
   "main": "./lib/localize",
