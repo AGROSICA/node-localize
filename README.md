@@ -1,6 +1,14 @@
 # The *node-localize* library
 provides a [GNU gettext](http://www.gnu.org/s/gettext/)-inspired (but not conformant) translation utility for [Node.js](http://nodejs.org) that tries to avoid some of the limitations of the ``sprintf``-bound ``gettext`` (such as translation string parameters being in a fixed order in all translation results) and "fit in" better than a straight port.
 
+## Installation
+
+If you have [npm](http://npmjs.org), just type:
+
+```sh
+npm install localize
+```
+
 ## Usage
 
 ``node-localize`` returns an object constructor so multiple simultaneous localization objects may be in use at once (though most cases will probably be a singleton instantiation). The only required parameter on initialization is a ``translations`` object, using the following structure:
