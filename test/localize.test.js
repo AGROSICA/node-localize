@@ -157,5 +157,11 @@ module.exports = {
 		assert.strictEqual(goodLocalize.localDate(theDate, "mm/dd/yyyy"), "07/04/1776");
 		goodLocalize.setLocale("es");
 		assert.strictEqual(goodLocalize.localDate(theDate), "Jueves, 4 de Julio 1776");
+	},
+	'test good missing translation ignore': function() {
+		var goodLocalize = new Localize("./translations");
+		goodLocalize.throwOnMissingTranslation(false);
+		goodLocalize.setLocale("es");
+		assert.strictEqual(goodLocalize.translate("Not found"), "Not found");
 	}
 };
