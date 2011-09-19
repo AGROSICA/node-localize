@@ -5,22 +5,22 @@ var fs = require('fs');
 var path = require('path');
 
 // Use localize for internal localizations
-var localize = require('localize');
+var localize = new require('localize')(__dirname);
 localize.throwOnMissingTranslation(false);
-localize.loadTranslations(path.join(__dirname, "translations.json"));
 var translate = localize.translate;
 
 // Defaults for ``xlocalize``
+var defaultLang = "en";
 var recurse = true;
 var extensions = ['html', 'js'];
 var outLangs = [];
 
-// Other global variables
-var outJSON = {};
-
 // Load arguments
 for(var i = 0; i < process.argv.length; i++) {
 	switch(process.argv[i]) {
+		case "-l":
+			defaultLang = process.argv[i+1];
+			break;
 		case "-r":
 			recurse = true;
 			break;
@@ -32,10 +32,24 @@ for(var i = 0; i < process.argv.length; i++) {
 			break;
 		case "-t":
 			outLangs = process.argv[i+1].split(",");
+			break;
+		case "-h":
+		case "--help":
+			console.log("xlocalize USAGE:\n");
+			console.log("-l\tSet the default language for the translations.json file(s) (default: en)");
+			console.log("-r\tSet xlocalize to generate translations.json files recursively (default)");
+			console.log("-R\tSet xlocalize to only generate a translations.json file for the current directory");
+			console.log("-e\tSet the file extensions to include for translation (default: html,js)");
+			console.log("-t\tSet the languages to translate to (comma separated)");
+			console.log("-h\tShow this help message.");
+			process.exit();
 		default:
 			break;
 	}
 }
+
+// Set internal localize object to use the user's default language
+localize.setLocale(defaultLang);
 
 // ## The *mergeObjs* function
 // is a helper function that clones the value of various object into a new one.
@@ -57,7 +71,9 @@ function mergeObjs() {
 // ## The *processDir* function
 // generates a ``translations.json`` file for the current directory, but does
 // not override the previous file -- only augments it
-function processDir(dir, dirJSON) {
+function processDir(dir) {
+	// JSON object for the current directory
+	var dirJSON = {};
 	// Path where translations will go
 	var translations = path.join(dir, "translations.json");
 	// Check for pre-existing ``translations.json`` file
@@ -82,7 +98,7 @@ function processDir(dir, dirJSON) {
 			processFile(path.join(dir, file), dirJSON);
 		}
 		if(recurse && fs.statSync(path.join(dir, file)).isDirectory()) {
-			processDir(path.join(dir, file), {});
+			processDir(path.join(dir, file));
 		}
 	});
 
@@ -96,24 +112,28 @@ function processDir(dir, dirJSON) {
 function processFile(filename, dirJSON) {
 	// Hacky, hacky RegExp parsing right now; replace with something better
 	var fileContents = fs.readFileSync(filename, "utf8");
-	var translatables = fileContents.match(/translation\(([^\),]*)/);
-	for(var i = 0; i < translatables.length; i++) {
-		if(/^['"](.*)['"]$/.test(translatables[i])) { // A string-looking thing
-			if(!dirJSON[RegExp.$1]) { // Does not yet exist
-				dirJSON[RegExp.$1] = {};
+	var translatables = fileContents.match(/translate\s*\([^\),]*/);
+	if(translatables) {
+		for(var i = 0; i < translatables.length; i++) {
+			if(/^translate\s*\(\s*['"](.*)['"]$/.test(translatables[i])) { // A string-looking thing
+				if(!dirJSON[RegExp.$1]) { // Does not yet exist
+					dirJSON[RegExp.$1] = {};
+				}
 				outLangs.forEach(function(lang) {
-					dirJSON[RegExp.$1][lang] = translate("MISSING TRANSLATION");
+					if(!dirJSON[RegExp.$1][lang]) { // No translation, yet
+						dirJSON[RegExp.$1][lang] = translate("MISSING TRANSLATION");
+					}
+				});
+			} else {
+				var translateMessage = translate("FOUND VARIABLE INPUT: $[1]", translatables[i]);
+				dirJSON[translateMessage] = {};
+				outLangs.forEach(function(lang) {
+					dirJSON[translateMessage][lang] = translate("MISSING TRANSLATION");
 				});
 			}
-		} else {
-			var translateMessage = translate("FOUND VARIABLE INPUT: $[1]", translatables[i]);
-			dirJSON[translateMessage] = {};
-			outLangs.forEach(function(lang) {
-				dirJSON[translateMessage][lang] = translate("MISSING TRANSLATION");
-			});
 		}
 	}
 }
 
 // Get the ball rollin'
-processDir(process.cwd(), {});
+processDir(process.cwd());
