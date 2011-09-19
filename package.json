@@ -5,13 +5,20 @@
   "author": "David Ellis",
   "contributors": [
     "Steven Levithan",
-    "Felix Geisendörfer"
+    "Felix Geisendörfer",
+    "Clint Andrew Hall",
+    "Jerry Jalava"
   ],
-  "version": "0.1.1",
+  "version": "0.2.0",
   "main": "./lib/localize",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "expresso": ">=0.8.1"
+  },
   "engines": {
     "node": "*"
+  },
+  "bin": {
+    "xlocalize": "./bin/xlocalize.js"
   }
 }

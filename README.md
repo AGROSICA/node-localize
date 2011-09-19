@@ -138,6 +138,31 @@ myLocalize.localDate(dateObjOrStr, maskStr, utcBool)
 // utcBool: a boolean indicating whether the timezone should be local or UTC
 ```
 
+## ``xlocalize`` CLI Utility
+
+Starting at version 0.2.0, ``node-localize``, when installed via NPM, adds an ``xlocalize`` utility command to the _PATH_, which allows for automatic construction of ``translations.json`` files (and can be re-run in the future to update existing files without clobbering any current translations present). It's command switches are as follows:
+
+``
+xlocalize USAGE:
+
+-l	Set the default language for the translations.json file(s) (default: en)
+-r	Set xlocalize to generate translations.json files recursively (default)
+-R	Set xlocalize to only generate a translations.json file for the current directory
+-e	Set the file extensions to include for translation (default: html,js)
+-t	Set the languages to translate to (comma separated)
+-h	Show this help message.
+``
+
+For example, to create a ``translations.json`` file in the current directory only that will translate from English to Spanish, Portuguese, Italian, and French for HTML and JS files:
+```sh
+xlocalize -R -t es,pt,it,fr
+```
+
+And if a new language, such as Serbian, is to be translated at a later time, you can use the command:
+```sh
+xlocalize -R -t es,pt,it,fr,sr
+```
+
 ## [Express](http://expressjs.com) Integration Tips
 
 If your website supports multiple languages (probably why you're using this library!), you'll want to translate the page content for each supported language. The following snippets of code should make it easy to use within Express.
@@ -192,11 +217,10 @@ I'm using [jQuery Templates for Express](https://github.com/kof/node-jqtpl) here
 * ``translations.es.json``, ``translations.de.json``, etc to allow more .po-like translation definitions and easier translation work for multiple translators
 * Numeric localization (1,234,567.89 versus 1.234.567,89 versus 1 234 567,89 versus [Japanese Numerals](http://en.wikipedia.org/wiki/Japanese_numerals) [no idea how to handle that one at the moment])
 * Currency localization; not just representing $100.00 versus 100,00$, but perhaps hooking into currency conversion, as well.
-* ``xgettext``-like cli utility to parse source files for text to translate and build a template file for translators
 
 ## License (MIT)
 
-Copyright (C) 2011 by Agrosica, Inc, David Ellis, Felix Geisendörfer, Steven Levithan, Scott Trenda, Kris Kowal.
+Copyright (C) 2011 by Agrosica, Inc, David Ellis, Felix Geisendörfer, Steven Levithan, Scott Trenda, Kris Kowal, Jerry Jalava, Clint Andrew Hall.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
