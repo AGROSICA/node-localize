@@ -138,11 +138,11 @@ myLocalize.localDate(dateObjOrStr, maskStr, utcBool)
 // utcBool: a boolean indicating whether the timezone should be local or UTC
 ```
 
-## ``xlocalize`` CLI Utility
+## _xlocalize_ CLI Utility
 
 Starting at version 0.2.0, ``node-localize``, when installed via NPM, adds an ``xlocalize`` utility command to the _PATH_, which allows for automatic construction of ``translations.json`` files (and can be re-run in the future to update existing files without clobbering any current translations present). It's command switches are as follows:
 
-``
+```
 xlocalize USAGE:
 
 -l	Set the default language for the translations.json file(s) (default: en)
@@ -151,9 +151,10 @@ xlocalize USAGE:
 -e	Set the file extensions to include for translation (default: html,js)
 -t	Set the languages to translate to (comma separated)
 -h	Show this help message.
-``
+```
 
 For example, to create a ``translations.json`` file in the current directory only that will translate from English to Spanish, Portuguese, Italian, and French for HTML and JS files:
+
 ```sh
 xlocalize -R -t es,pt,it,fr
 ```
