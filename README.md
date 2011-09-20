@@ -216,6 +216,7 @@ I'm using [jQuery Templates for Express](https://github.com/kof/node-jqtpl) here
 
 * Browser compatibility (use same functions for client-side jQuery Templates, for instance)
 * ``translations.es.json``, ``translations.de.json``, etc to allow more .po-like translation definitions and easier translation work for multiple translators
+* Optional Country Code support (that falls back to baseline language translation if a specific country code is missing) for regional language differences
 * Numeric localization (1,234,567.89 versus 1.234.567,89 versus 1 234 567,89 versus [Japanese Numerals](http://en.wikipedia.org/wiki/Japanese_numerals) [no idea how to handle that one at the moment])
 * Currency localization; not just representing $100.00 versus 100,00$, but perhaps hooking into currency conversion, as well.
 
