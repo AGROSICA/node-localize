@@ -39,6 +39,19 @@ console.log(myLocalize.translate("Substitution: $[1]", 5)); // замена: 5
 
 ``node-localize`` objects can also be passed a string indicating the directory a ``translations.json`` file can be found. This directory is searched recursively for all ``translations.json`` files in all subdirectories, and their contents combined together, so you can organize your translations as you wish.
 
+The directory is also searched recursively for directories named ``translations``. These directories are checked for special text files of the form ``varname.txt``, ``varname.es.txt``, ``varname.sr.txt``, etc. The text in ``varname.txt`` is treated as the default language of the application and the ``varname.xx.txt`` are treated as translations of the text. A special ``strings`` object is created where the ``varname`` becomes a property of that object and the default language text is the value of the property. So you can also do the following:
+
+```js
+var Localize = require('localize');
+
+var myLocalize = new Localize('./path/to/text/files/');
+
+console.log(myLocalize.translate(myLocalize.strings.reallyLongText); // The contents of ./path/to/text/files/translations/reallyLongText.txt, if it exists
+
+myLocalize.setLocale("es");
+console.log(myLocalize.translate(myLocalize.strings.reallyLongText); // The contents of ./path/to/text/files/translations/reallyLongText.es.txt, if it exists
+```
+
 ## Dates
 
 Because date formats differ so wildly in different languages and these differences cannot be solved via simple substitution, there is also a ``localDate`` method for translating these values.
@@ -184,19 +197,20 @@ app.configure(function() {
 
 I'm assuming you're storing their language preference inside of a session, but the logic can be easily tweaked for however you detect which language to show.
 
-### Export *translate* and *localDate* as static helpers
+### Export *translate*, *localDate*, and *strings* as static helpers
 
 ```js
 app.helpers({
     ...
     translate: localize.translate,
-    localDate: localize.localDate
+    localDate: localize.localDate,
+    strings: localize.strings
 });
 ```
 
 Your controllers shouldn't really even be aware of any localization issues; the views should be doing that, so this ought to be enough configuration within your ``app.js`` file.
 
-### Using *translate* and *localDate* in your views
+### Using *translate*, *localDate*, and *strings* in your views
 
 ```html
 <h1>${translate("My Awesome Webpage")}</h1>
@@ -205,9 +219,11 @@ Your controllers shouldn't really even be aware of any localization issues; the 
 
 <h3>${translate("Published: $[1]", localDate(publicationDate))}</h3>
 
-{{if session.lang != "en"}}
+{{if translate(strings.reallyLongPost) == strings.reallyLongPost}}
 <strong>${translate("Warning: The following content is in English.")}</strong>
 {{/if}}
+
+{{html translate(strings.reallyLongPost)}}
 ```
 
 I'm using [jQuery Templates for Express](https://github.com/kof/node-jqtpl) here, but it should be easy to translate to whatever templating language you prefer.
@@ -215,7 +231,6 @@ I'm using [jQuery Templates for Express](https://github.com/kof/node-jqtpl) here
 ## Planned Features
 
 * Browser compatibility (use same functions for client-side jQuery Templates, for instance)
-* ``translations.es.json``, ``translations.de.json``, etc to allow more .po-like translation definitions and easier translation work for multiple translators
 * Optional Country Code support (that falls back to baseline language translation if a specific country code is missing) for regional language differences
 * Numeric localization (1,234,567.89 versus 1.234.567,89 versus 1 234 567,89 versus [Japanese Numerals](http://en.wikipedia.org/wiki/Japanese_numerals) [no idea how to handle that one at the moment])
 * Currency localization; not just representing $100.00 versus 100,00$, but perhaps hooking into currency conversion, as well.
