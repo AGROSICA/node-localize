@@ -163,5 +163,11 @@ module.exports = {
 		goodLocalize.throwOnMissingTranslation(false);
 		goodLocalize.setLocale("es");
 		assert.strictEqual(goodLocalize.translate("Not found"), "Not found");
+	},
+	'test translations dir': function() {
+		var goodLocalize = new Localize('./translations');
+		assert.strictEqual(goodLocalize.translate(goodLocalize.strings.helloWorld), "Hello, World!\n");
+		goodLocalize.setLocale("es");
+		assert.strictEqual(goodLocalize.translate(goodLocalize.strings.helloWorld), "¡Hola, mundo!\n");
 	}
 };
