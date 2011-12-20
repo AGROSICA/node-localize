@@ -151,6 +151,13 @@ myLocalize.localDate(dateObjOrStr, maskStr, utcBool)
 // utcBool: a boolean indicating whether the timezone should be local or UTC
 ```
 
+```js
+myLocalize.strings
+// Object of key-value pairs defined by files in ``translations`` directories
+// Key is the filename (sans extension) and value is the default language
+// text. Useful for translating very large blocks of text that shouldn't really
+// exist in code.
+
 ## _xlocalize_ CLI Utility
 
 Starting at version 0.2.0, ``node-localize``, when installed via NPM, adds an ``xlocalize`` utility command to the _PATH_, which allows for automatic construction of ``translations.json`` files (and can be re-run in the future to update existing files without clobbering any current translations present). It's command switches are as follows:
@@ -234,6 +241,7 @@ I'm using [jQuery Templates for Express](https://github.com/kof/node-jqtpl) here
 * Optional Country Code support (that falls back to baseline language translation if a specific country code is missing) for regional language differences
 * Numeric localization (1,234,567.89 versus 1.234.567,89 versus 1 234 567,89 versus [Japanese Numerals](http://en.wikipedia.org/wiki/Japanese_numerals) [no idea how to handle that one at the moment])
 * Currency localization; not just representing $100.00 versus 100,00$, but perhaps hooking into currency conversion, as well.
+* Pluralization; one area gettext still beats node-localize is the ability to pluralize words correctly when given the number to pluralize against.
 
 ## License (MIT)
 
