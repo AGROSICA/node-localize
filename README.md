@@ -157,6 +157,7 @@ myLocalize.strings
 // Key is the filename (sans extension) and value is the default language
 // text. Useful for translating very large blocks of text that shouldn't really
 // exist in code.
+```
 
 ## _xlocalize_ CLI Utility
 
