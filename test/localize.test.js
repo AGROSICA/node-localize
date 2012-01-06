@@ -97,6 +97,12 @@ module.exports = {
 		goodLocalize.setLocale("es");
 		assert.strictEqual(goodLocalize.translate("Substitution: $[1]", 5), "Sustitución: 5");
 	},
+	'test good translate multiple substitution': function() {
+		var goodLocalize = new Localize("./translations");
+		assert.strictEqual(goodLocalize.translate("Multiple substitution: $[1], $[2]", 5, 25), "Multiple substitution: 5, 25");
+		goodLocalize.setLocale("es");
+		assert.strictEqual(goodLocalize.translate("Multiple substitution: $[1], $[2]", 5, 25), "Sustitución múltiple: 5, 25");
+	},
 	'test bad dateFormat var initialization': function() {
 		assert.doesNotThrow(function() {
 			var goodLocalize = new Localize("./translations", 25);
