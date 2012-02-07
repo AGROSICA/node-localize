@@ -9,7 +9,7 @@
     "Clint Andrew Hall",
     "Jerry Jalava"
   ],
-  "version": "0.4.1",
+  "version": "0.4.2",
   "main": "./lib/localize",
   "dependencies": {},
   "devDependencies": {
