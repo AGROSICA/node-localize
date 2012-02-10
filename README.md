@@ -263,7 +263,6 @@ If you're using node-localize on the client in this fashion, it would be wise to
 
 ## Planned Features
 
-* Browser compatibility (use same functions for client-side jQuery Templates, for instance)
 * Optional Country Code support (that falls back to baseline language translation if a specific country code is missing) for regional language differences
 * Numeric localization (1,234,567.89 versus 1.234.567,89 versus 1 234 567,89 versus [Japanese Numerals](http://en.wikipedia.org/wiki/Japanese_numerals) [no idea how to handle that one at the moment])
 * Currency localization; not just representing $100.00 versus 100,00$, but perhaps hooking into currency conversion, as well.
