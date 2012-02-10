@@ -111,6 +111,12 @@ myLocalize.loadTranslations(translationsObjOrStr);
 ```
 
 ```js
+myLocalize.getTranslations(translationsArrOrUndef);
+// translationsArrOrUndef: an array of untranslated text whose translations you want
+// to acquire, or leave it undefined for the entire internal translations object
+```
+
+```js
 myLocalize.clearTranslations();
 // Wipes out the translations object entirely (if a clean reload is desired)
 ```
@@ -136,6 +142,11 @@ myLocalize.loadDateFormats(dateFormatObj);
 // dateFormatObj: a conformant date format object, containing one or more locales
 //     Specified locales are appended to the internal object just like
 //     loadTranslations.
+```
+
+```js
+myLocalize.getDateFormats();
+// Returns the internal date formats object.
 ```
 
 ```js
@@ -235,6 +246,20 @@ Your controllers shouldn't really even be aware of any localization issues; the 
 ```
 
 I'm using [jQuery Templates for Express](https://github.com/kof/node-jqtpl) here, but it should be easy to translate to whatever templating language you prefer.
+
+### Easy exporting of *node-localize* library to client without copying library into own source
+
+Since node-localize can also run inside of the browser, and so can jQuery Templates, it can be quite useful to be able to export the library to the client. But rather than manually copying the library code into your website (and keeping track of updates/bugfixes manually), you can get the source code of node-localize directly from the library and add an Express route for it:
+
+```js
+app.get('/js/localize.js', function(req, res) {
+    res.send(Localize.source);
+});
+```
+
+Where ``Localize`` is equivalent to ``require('localize')``, not an instantiated localize object.
+
+If you're using node-localize on the client in this fashion, it would be wise to add ``getTranslations`` and ``getDateFormats`` to the ``app.helpers`` object, so views can specify which translations and date formatting they need the client to have to function properly.
 
 ## Planned Features
 
