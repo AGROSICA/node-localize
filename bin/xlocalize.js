@@ -4,6 +4,11 @@
 var fs = require('fs');
 var path = require('path');
 
+// Patch ``fs`` to use ``path.exists`` and ``path.existsSync`` if ``fs.exists`` and ``fs.existsSync`` don't exist.
+// Reason? So Node 0.8.x-compliant code still works on Node 0.6.x, 0.4.x, and possibly earlier.
+fs.exists = fs.exists ? fs.exists : path.exists;
+fs.existsSync = fs.existsSync ? fs.existsSync : path.existsSync;
+
 // Use localize for internal localizations
 var localize = new require('localize')(__dirname);
 localize.throwOnMissingTranslation(false);
@@ -77,7 +82,7 @@ function processDir(dir) {
 	// Path where translations will go
 	var translations = path.join(dir, "translations.json");
 	// Check for pre-existing ``translations.json`` file
-	if(path.existsSync(translations)) {
+	if(fs.existsSync(translations)) {
 		var currJSON = JSON.parse(fs.readFileSync(translations, "utf8"));
 		dirJSON = mergeObjs(dirJSON, currJSON);
 	}
