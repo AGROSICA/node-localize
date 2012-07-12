@@ -10,7 +10,7 @@ fs.exists = fs.exists ? fs.exists : path.exists;
 fs.existsSync = fs.existsSync ? fs.existsSync : path.existsSync;
 
 // Use localize for internal localizations
-var localize = new require('localize')(__dirname);
+var localize = new require('../lib/localize')(__dirname);
 localize.throwOnMissingTranslation(false);
 var translate = localize.translate;
 
