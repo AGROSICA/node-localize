@@ -15,7 +15,7 @@ then
 		test3=`diff translations.json ../xlocalize.testfile3.json`
 		if [ "$test3" = "" ]
 		then
-			cd subdir
+			cd js
 			test4=`diff translations.json ../../xlocalize.testfile4.json`
 			if [ "$test4" = "" ]
 			then

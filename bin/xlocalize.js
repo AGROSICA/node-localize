@@ -86,7 +86,7 @@ function processDir(dir) {
 		var currJSON = JSON.parse(fs.readFileSync(translations, "utf8"));
 		dirJSON = mergeObjs(dirJSON, currJSON);
 	}
-	
+
 	// Build pattern matching for searchable files
 	var extRegExpStr = "(";
 	for(var i = 0; i < extensions.length; i++) {
@@ -99,7 +99,7 @@ function processDir(dir) {
 	// Process files in the current directory
 	var files = fs.readdirSync(dir);
 	files.forEach(function(file) {
-		if(extRegExp.test(file)) {
+		if(fs.statSync(path.join(dir, file)).isFile() && extRegExp.test(file)) {
 			processFile(path.join(dir, file), dirJSON);
 		}
 		if(recurse && fs.statSync(path.join(dir, file)).isDirectory()) {
