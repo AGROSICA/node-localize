@@ -117,7 +117,7 @@ function processDir(dir) {
 function processFile(filename, dirJSON) {
 	// Hacky, hacky RegExp parsing right now; replace with something better
 	var fileContents = fs.readFileSync(filename, "utf8");
-	var translatables = fileContents.match(/translate\s*\([^\),]*/);
+	var translatables = fileContents.match(/translate\s*\([^\),]*/g);
 	if(translatables) {
 		for(var i = 0; i < translatables.length; i++) {
 			if(/^translate\s*\(\s*['"](.*)['"]$/.test(translatables[i])) { // A string-looking thing
